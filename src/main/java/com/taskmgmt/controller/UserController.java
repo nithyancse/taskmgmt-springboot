@@ -18,66 +18,70 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.taskmgmt.constant.IConstant;
+import com.taskmgmt.domain.CustError;
 import com.taskmgmt.domain.User;
-import com.taskmgmt.exception.CustError;
 import com.taskmgmt.service.inter.IUserService;
 
 @RestController
 @RequestMapping("/")
 public class UserController {
 
-		@Autowired
-		private IUserService iUserService;
-		
-		@PostMapping("addUser")
-		public ResponseEntity<?> addUser (@Valid @RequestBody User user, UriComponentsBuilder builder){
-			boolean flag = iUserService.addUser(user);
-			if (flag == false) {
-				return new ResponseEntity<Void>(HttpStatus.ALREADY_REPORTED);
+	@Autowired
+	private IUserService iUserService;
+
+	@PostMapping("addUser")
+	public ResponseEntity<?> addUser(@Valid @RequestBody User user,
+			UriComponentsBuilder builder) {
+		boolean flag = iUserService.addUser(user);
+		if (flag == false) {
+			return new ResponseEntity<Void>(HttpStatus.ALREADY_REPORTED);
+		}
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(builder.path("/fetchUserDetail/{userId}")
+				.buildAndExpand(user.getId()).toUri());
+		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	}
+
+	@PostMapping("addName")
+	public ResponseEntity<?> addName(@RequestParam(value = "id") long id,
+			@RequestParam(value = "name") String name) {
+		if (name == null) {
+			CustError error = new CustError(HttpStatus.BAD_REQUEST,
+					"Validation failed");
+			error.addFieldError("User", "Name", "Name Should be empty");
+			if (error != null) {
+				return ResponseEntity.badRequest().body(error);
 			}
-			HttpHeaders headers = new HttpHeaders();
-			headers.setLocation(builder.path("/fetchUserDetail/{userId}")
-					.buildAndExpand(user.getId()).toUri());
-			return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 		}
-		
-		@PostMapping("addName")
-		public ResponseEntity<?> addName (@RequestParam(value="userId") int userId, 
-				@RequestParam(value="name") String name){
-			if(name== null){
-				CustError error = new CustError(HttpStatus.BAD_REQUEST, "Validation failed");
-				error.addFieldError("User", "Name", "Name Should be empty");
-				if (error != null) {
-					return ResponseEntity.badRequest().body(error);
-				}
-			}
-			iUserService.addName(userId, name);
-			HttpHeaders headers = new HttpHeaders();
-			return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-		}
-		
-		@GetMapping("fetchUserDetail")
-		public User fetchUserDetail(@RequestParam(value="userId") String userId){
-			User user = iUserService.fetchUserDetail(Integer.parseInt(userId));
-			return user;
-		}
-		
-	
-		@GetMapping("fetchAllUsers")
-		public List<User> fetchAllUsers(){
-			List<User> allUserList = iUserService.fetchAllUsers();
-			return allUserList;
-		}
-		
-		@PutMapping("updateUser")
-		public ResponseEntity<User> updateUser(@RequestBody User user){
-			iUserService.updateUser(user);
-			return new ResponseEntity<User>(user, HttpStatus.OK);
-		}
-		
-		@DeleteMapping("deleteUser")
-		public ResponseEntity<Void> deleteUser(@RequestParam(value="userId") String userId){
-			iUserService.deleteUser(Integer.parseInt(userId));
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		}
+		iUserService.addName(id, name);
+		HttpHeaders headers = new HttpHeaders();
+		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	}
+
+	@GetMapping("fetchUserDetail")
+	public User fetchUserDetail(@RequestParam(value = "userId") long id) {
+		User user = iUserService.fetchUserDetail(id);
+		return user;
+	}
+
+	@GetMapping("fetchAllUsers")
+	public List<User> fetchAllUsers() {
+		List<User> allUserList = iUserService.fetchAllUsers();
+		return allUserList;
+	}
+
+	@PutMapping("updateUser")
+	public ResponseEntity<User> updateUser(@RequestBody User user) {
+		iUserService.updateUser(user);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+	}
+
+	@DeleteMapping("deleteUser")
+	public ResponseEntity<Void> deleteUser(@RequestParam(value = "id") long id) {
+		User user = iUserService.fetchUserDetail(id);
+		user.setStatus(IConstant.DELETE);
+		iUserService.updateUser(user);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
 }

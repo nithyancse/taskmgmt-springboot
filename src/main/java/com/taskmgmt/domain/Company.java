@@ -9,6 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="company")
@@ -17,28 +21,30 @@ public class Company extends AuditModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy= GenerationType.AUTO, generator="nativeWay")
+	@GenericGenerator(name = "nativeWay", strategy = "native")
 	@Column(name="id")
-	private int id;
+	private Long id;
 	
-	@Column(name="name")
+	@NotBlank
+	@Size(max=100, message="Company name should be less than 100 chars")
+	@Column(name="name", nullable = false, columnDefinition = "VARCHAR(100)", length = 100)
 	private String name;
 	
-	@Column(name="logo")
+	@Column(name="logo", columnDefinition = "BLOB")
 	private File logo;
 	
 	@Column(name="created_by")
-	private int createdBy;
+	private Long createdBy;
 	
 	@Column(name="updated_by")
-	private int updatedBy;
-	
+	private Long updatedBy;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -58,20 +64,25 @@ public class Company extends AuditModel implements Serializable {
 		this.logo = logo;
 	}
 
-	public int getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public int getUpdatedBy() {
+	public Long getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Long updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 	
 }

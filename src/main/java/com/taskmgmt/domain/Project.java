@@ -1,12 +1,24 @@
 package com.taskmgmt.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -16,41 +28,48 @@ public class Project implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="project_id")
-	private int projectId;
+	@GeneratedValue(strategy= GenerationType.AUTO, generator="nativeWay")
+	@GenericGenerator(name = "nativeWay", strategy = "native")
+	@Column(name="id")
+	private Long id;
 	
-	@Column(name="company_id")
-	private int companyId;
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Company.class)
+	@JoinColumn(name = "company_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	private Long companyId;
 	
-	@Column(name="title")
+	@NotBlank
+	@Size(max=100, message="Project title should be less than 100 chars")
+	@Column(name="title", nullable = false, columnDefinition = "VARCHAR(100)", length = 100)
 	private String title;
 	
-	@Column(name="status")
+	@Column(name="status", columnDefinition = "VARCHAR(2) DEFAULT 'A'", length = 2)
 	private String status;
 	
-	@Column(name="methodolgy")
+	@NotBlank
+	@Column(name="methodolgy", columnDefinition = "VARCHAR(20)", length = 20)
 	private String methodolgy;
 	
 	@Column(name="created_by")
-	private int createdBy;
+	private Long createdBy;
 	
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Long updatedBy;
 
-	public int getProjectId() {
-		return projectId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setProjectId(int projectId) {
-		this.projectId = projectId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public int getCompanyId() {
+	public Long getCompanyId() {
 		return companyId;
 	}
 
-	public void setCompanyId(int companyId) {
+	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
 
@@ -78,21 +97,25 @@ public class Project implements Serializable {
 		this.methodolgy = methodolgy;
 	}
 
-	public int getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public int getUpdatedBy() {
+	public Long getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Long updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-	
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	
 }

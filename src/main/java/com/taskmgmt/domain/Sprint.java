@@ -1,12 +1,17 @@
 package com.taskmgmt.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity
@@ -16,41 +21,48 @@ public class Sprint implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="sprint_id")
-	private int sprintId;
+	@GeneratedValue(strategy= GenerationType.AUTO, generator="nativeWay")
+	@GenericGenerator(name = "nativeWay", strategy = "native")
+	@Column(name="id")
+	private Long id;
 	
 	@Column(name="project_id")
-	private int projectId;
+	private Long projectId;
 	
-	@Column(name="sprint_name")
+	@NotBlank
+	@Size(max=45, message="Sprint title should be less than 45 chars")
+	@Column(name="sprint_name", nullable = false, columnDefinition = "VARCHAR(45)", length = 45)
 	private String sprintName;
 	
-	@Column(name="start_date")
+	@NotBlank
+	@Size(max=10, message="Start date should be less than 10 chars")
+	@Column(name="start_date", nullable = false, columnDefinition = "VARCHAR(10)", length = 10)
 	private String startDate;
 	
-	@Column(name="end_date")
+	@NotBlank
+	@Size(max=10, message="End date should be less than 10 chars")
+	@Column(name="end_date", nullable = false, columnDefinition = "VARCHAR(10)", length = 10)
 	private String endDate;
 	
 	@Column(name="created_by")
-	private int createdBy;
+	private Long createdBy;
 	
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Long updatedBy;
 
-	public int getSprintId() {
-		return sprintId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setSprintId(int sprintId) {
-		this.sprintId = sprintId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public int getProjectId() {
+	public Long getProjectId() {
 		return projectId;
 	}
 
-	public void setProjectId(int projectId) {
+	public void setProjectId(Long projectId) {
 		this.projectId = projectId;
 	}
 
@@ -78,20 +90,26 @@ public class Sprint implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public int getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public int getUpdatedBy() {
+	public Long getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Long updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 	
 }

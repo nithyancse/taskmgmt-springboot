@@ -1,4 +1,4 @@
-package com.taskmgmt.exception;
+package com.taskmgmt.domain;
 
 import java.util.ArrayList;
 import java.util.List;

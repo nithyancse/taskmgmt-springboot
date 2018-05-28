@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.taskmgmt.constant.IConstant;
 import com.taskmgmt.domain.User;
 import com.taskmgmt.repository.CompanyRepository;
 import com.taskmgmt.repository.UserRepository;
@@ -20,9 +21,9 @@ public class UserService implements IUserService {
 	@Autowired
 	CompanyRepository companyRepository;
 
-	public User fetchUserDetail(int userId){
-		User obj = userRepository.findById(userId).get();
-		return obj;
+	public User fetchUserDetail(long id){
+		User user = userRepository.findById(id).get();
+		return user;
 		
 	}
 
@@ -50,15 +51,24 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public void deleteUser(int userId) {
-		userRepository.deleteById(userId);
+	public void deleteUser(long id) {
+		userRepository.deleteById(id);
 	}
 
 	@Override
-	public void addName(Integer userId, String name) {
-		User user = userRepository.findById(userId).get();
+	public void addName(long id, String name) {
+		User user = userRepository.findById(id).get();
 		user.setName(name);
 		userRepository.save(user);
+	}
+
+	@Override
+	public Long validateUser(String emailId, String password) {
+		List<User> list = userRepository.findByEmailIdAndPasswordAndStatus(emailId, password, IConstant.ACTIVE); 	
+        if (list.size() > 0) {
+        	return list.get(0).getId();
+        } 
+        return 0L;
 	}
 	
 }

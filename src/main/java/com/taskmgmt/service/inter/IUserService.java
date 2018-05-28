@@ -1,11 +1,12 @@
 package com.taskmgmt.service.inter;
 
 import java.util.List;
+
 import com.taskmgmt.domain.User;
 
 public interface IUserService {
 
-	public User fetchUserDetail(int userId);
+	public User fetchUserDetail(long id);
 
 	public List<User> fetchAllUsers();
 
@@ -13,8 +14,10 @@ public interface IUserService {
 
 	public void updateUser(User userRegistration);
 
-	public void deleteUser(int userId);
+	public void deleteUser(long id);
 
-	public void addName(Integer userId, String name);
+	public void addName(long id, String name);
+	
+	public Long validateUser(String emailId, String password);
 
 }
