@@ -23,7 +23,7 @@ public class CompanyController {
 		iCompanyService.addCompany(company);
 		return company;
 	}
-	
+
 	@GetMapping("getCompanyDetails")
 	public Company getCompanyDetails(@RequestParam(value = "id") long id) {
 		Company company = iCompanyService.getCompanyDetails(id);

@@ -14,6 +14,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="company")
 public class Company extends AuditModel implements Serializable {
@@ -35,9 +37,11 @@ public class Company extends AuditModel implements Serializable {
 	private File logo;
 	
 	@Column(name="created_by")
+	@JsonIgnore
 	private Long createdBy;
 	
 	@Column(name="updated_by")
+	@JsonIgnore
 	private Long updatedBy;
 
 	public Long getId() {

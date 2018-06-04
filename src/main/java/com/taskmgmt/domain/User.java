@@ -8,11 +8,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="user")
@@ -33,14 +36,24 @@ public class User extends AuditModel implements Serializable {
 	@Size(min=6, message="Password length should be Minimum 6")
 	@Size(max=25, message="Password length should be Maximum 25")
 	@Column(name="password", nullable = false, columnDefinition = "VARCHAR(25)", length = 25)
+	@JsonIgnore
 	private String password;
 	
 	@NotBlank(message="Please enter Email Id")
 	@Email(message="Please enter valid Email Id")
 	@Column(name="email_id", nullable = false, columnDefinition = "VARCHAR(45)", length = 45)
+	@JsonIgnore
 	private String emailId;
 	
+	@NotBlank(message="Please enter Confirm Password")
+	@Size(min=6, message="Confirm Password length should be Minimum 6")
+	@Size(max=25, message="Confirm Password length should be Maximum 25")
+	@Transient
+	@JsonIgnore
+	private String confirmPassword;
+
 	@Column(name="status", columnDefinition = "VARCHAR(2) DEFAULT 'A'", length = 2)
+	@JsonIgnore
 	private String status;
 	
 	@Column(name="company_id")
@@ -76,6 +89,14 @@ public class User extends AuditModel implements Serializable {
 
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
+	}
+	
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 	public String getStatus() {

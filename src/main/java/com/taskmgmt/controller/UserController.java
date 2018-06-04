@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,24 +32,20 @@ public class UserController {
 	private IUserService iUserService;
 
 	@PostMapping("addUser")
-	public ResponseEntity<?> addUser(@Valid @RequestBody User user,
-			UriComponentsBuilder builder) {
+	public ResponseEntity<?> addUser(@Valid @RequestBody User user, UriComponentsBuilder builder, Errors errors) {
 		boolean flag = iUserService.addUser(user);
 		if (flag == false) {
 			return new ResponseEntity<Void>(HttpStatus.ALREADY_REPORTED);
 		}
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/fetchUserDetail/{userId}")
-				.buildAndExpand(user.getId()).toUri());
+		headers.setLocation(builder.path("/fetchUserDetail/{userId}").buildAndExpand(user.getId()).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
 	@PostMapping("addName")
-	public ResponseEntity<?> addName(@RequestParam(value = "id") long id,
-			@RequestParam(value = "name") String name) {
+	public ResponseEntity<?> addName(@RequestParam(value = "id") long id, @RequestParam(value = "name") String name) {
 		if (name == null) {
-			CustError error = new CustError(HttpStatus.BAD_REQUEST,
-					"Validation failed");
+			CustError error = new CustError(HttpStatus.BAD_REQUEST, "Validation failed");
 			error.addFieldError("User", "Name", "Name Should be empty");
 			if (error != null) {
 				return ResponseEntity.badRequest().body(error);

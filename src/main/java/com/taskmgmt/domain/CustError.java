@@ -16,8 +16,8 @@ public class CustError {
 		this.message = message;
 	}
 
-	public void addFieldError(String objectName, String fieldName, String message) {
-		FieldError error = new FieldError(objectName, fieldName, message);
+	public void addFieldError(String objectName, String fieldName, String msg) {
+		FieldError error = new FieldError(objectName, fieldName, msg);
 		fieldErrors.add(error);
 	}
 

@@ -11,15 +11,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taskmgmt.domain.Company;
+import com.taskmgmt.domain.CustError;
 import com.taskmgmt.domain.User;
 import com.taskmgmt.domain.wrapper.UserCompanyWrap;
 import com.taskmgmt.service.inter.ICompanyService;
 import com.taskmgmt.service.inter.IUserService;
+import com.taskmgmt.util.Utils;
 
 @RestController
 @RequestMapping("/")
 public class LoginController {
-	
+
 	Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@Autowired
@@ -34,11 +36,27 @@ public class LoginController {
 	@GetMapping("login")
 	public ResponseEntity<?> validateLogin(@RequestParam(value = "emailId") String emailId,
 			@RequestParam(value = "password") String password) {
-		Long userId = iUserService.validateUser(emailId, password);
-		if (userId == 0) {
-			logger.info("Authendication failed --> emailId:"+emailId+", password: "+password);
-			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+
+		String errorMsg = null;
+		Long userId = 0L;
+
+		if (!Utils.isEmpty(emailId) && !Utils.isEmpty(password)) {
+			userId = iUserService.validateUser(emailId, password);
+			if (userId == 0) {
+				errorMsg = "Incorrect Username and Password !!!";
+				logger.info("Authendication failed --> emailId:" + emailId + ", password: " + password);
+			}
+		} else {
+			errorMsg = "Username and Password should be Empty";
 		}
+
+		if (!Utils.isEmpty(errorMsg)) {
+			CustError error = new CustError(HttpStatus.BAD_REQUEST, errorMsg);
+			if (error != null) {
+				return ResponseEntity.badRequest().body(error);
+			}
+		}
+
 		User user = iUserService.fetchUserDetail(userId);
 		Company company = iCompanyService.getCompanyDetails(user.getCompanyId());
 		userCompanyWrap.setUser(user);
