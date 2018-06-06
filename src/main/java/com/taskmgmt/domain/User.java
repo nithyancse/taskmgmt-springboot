@@ -15,8 +15,6 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name="user")
 public class User extends AuditModel implements Serializable {
@@ -32,28 +30,21 @@ public class User extends AuditModel implements Serializable {
 	@Column(name="name", columnDefinition = "VARCHAR(45)", length = 45)
 	private String name;
 	
-	@NotBlank(message="Please enter Password")
-	@Size(min=6, message="Password length should be Minimum 6")
-	@Size(max=25, message="Password length should be Maximum 25")
-	@Column(name="password", nullable = false, columnDefinition = "VARCHAR(25)", length = 25)
-	@JsonIgnore
+	
+	@Size(min=6, max=24, message="Password length should be min {min} and max {max}")
+	@Column(name="password", nullable = false, columnDefinition = "VARCHAR(25)", length = 24)
 	private String password;
 	
 	@NotBlank(message="Please enter Email Id")
 	@Email(message="Please enter valid Email Id")
 	@Column(name="email_id", nullable = false, columnDefinition = "VARCHAR(45)", length = 45)
-	@JsonIgnore
 	private String emailId;
 	
-	@NotBlank(message="Please enter Confirm Password")
-	@Size(min=6, message="Confirm Password length should be Minimum 6")
-	@Size(max=25, message="Confirm Password length should be Maximum 25")
+	@Size(min=6, max=24, message="Confirm Password length should be min {min} and max {max}")
 	@Transient
-	@JsonIgnore
 	private String confirmPassword;
 
 	@Column(name="status", columnDefinition = "VARCHAR(2) DEFAULT 'A'", length = 2)
-	@JsonIgnore
 	private String status;
 	
 	@Column(name="company_id")

@@ -1,25 +1,21 @@
 package com.taskmgmt.domain;
 
-public class ApiErrorResponse {
+import org.springframework.http.HttpStatus;
 
-	private int status;
-	private int code;
+public class GlobalError {
+
+	private HttpStatus status;
 	private String message;
 	private String error;
 
-	public ApiErrorResponse(int status, int code, String message, String error) {
+	public GlobalError(HttpStatus status, String message, String error) {
 		this.status = status;
-		this.code = code;
 		this.message = message;
 		this.error = error;
 	}
 
-	public int getStatus() {
+	public HttpStatus getStatus() {
 		return status;
-	}
-
-	public int getCode() {
-		return code;
 	}
 
 	public String getMessage() {
@@ -36,7 +32,7 @@ public class ApiErrorResponse {
 
 	@Override
 	public String toString() {
-		return "ApiErrorResponse{" + "status=" + status + ", code=" + code
-				+ ", message=" + message + ", error=" + error + '}';
+		return "ApiErrorResponse [status=" + status + ", message=" + message + ", error=" + error + "]";
 	}
+
 }

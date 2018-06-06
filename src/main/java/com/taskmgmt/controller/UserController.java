@@ -21,8 +21,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.taskmgmt.constant.IConstant;
 import com.taskmgmt.domain.CustError;
+import com.taskmgmt.domain.CustResponse;
 import com.taskmgmt.domain.User;
 import com.taskmgmt.service.inter.IUserService;
+import com.taskmgmt.util.Utils;
 
 @RestController
 @RequestMapping("/")
@@ -35,22 +37,30 @@ public class UserController {
 	public ResponseEntity<?> addUser(@Valid @RequestBody User user, UriComponentsBuilder builder, Errors errors) {
 		boolean flag = iUserService.addUser(user);
 		if (flag == false) {
-			return new ResponseEntity<Void>(HttpStatus.ALREADY_REPORTED);
+			CustResponse restAlready = new CustResponse("You are Already Registered !!!");
+			return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(restAlready);
 		}
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/fetchUserDetail/{userId}").buildAndExpand(user.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+		CustResponse success = new CustResponse("Successfully you are Resgistered with us !!!");
+		return ResponseEntity.created(null).body(success);
 	}
 
 	@PostMapping("addName")
 	public ResponseEntity<?> addName(@RequestParam(value = "id") long id, @RequestParam(value = "name") String name) {
-		if (name == null) {
-			CustError error = new CustError(HttpStatus.BAD_REQUEST, "Validation failed");
-			error.addFieldError("User", "Name", "Name Should be empty");
+		String errorMsg = null;
+		if (!Utils.isEmpty(name)) {
+			if(name.length() > 45)
+				errorMsg = "Name Should be empty < 45 chars";
+		} else {
+			errorMsg = "Name Should not be empty";
+		}
+		
+		if (!Utils.isEmpty(errorMsg)) {
+			CustError error = new CustError(errorMsg);
 			if (error != null) {
 				return ResponseEntity.badRequest().body(error);
 			}
 		}
+
 		iUserService.addName(id, name);
 		HttpHeaders headers = new HttpHeaders();
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);

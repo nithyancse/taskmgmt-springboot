@@ -51,7 +51,7 @@ public class LoginController {
 		}
 
 		if (!Utils.isEmpty(errorMsg)) {
-			CustError error = new CustError(HttpStatus.BAD_REQUEST, errorMsg);
+			CustError error = new CustError(errorMsg);
 			if (error != null) {
 				return ResponseEntity.badRequest().body(error);
 			}
