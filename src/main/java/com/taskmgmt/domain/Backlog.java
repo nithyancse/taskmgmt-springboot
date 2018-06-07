@@ -32,13 +32,13 @@ public class Backlog implements Serializable {
 	@GeneratedValue(strategy= GenerationType.AUTO, generator="nativeWay")
 	@GenericGenerator(name = "nativeWay", strategy = "native")
 	@Column(name="id")
-	private Long id;
+	private long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Project.class)
 	@JoinColumn(name = "project_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
-	private Long projectId;
+	private long projectId;
 	
 	@NotBlank
 	@Size(max=500, message="Title length should be less than 500 chars")
@@ -51,10 +51,10 @@ public class Backlog implements Serializable {
 	private String description;
 	
 	@Column(name="reporter")
-	private Long reporter;
+	private long reporter;
 	
 	@Column(name="assignee")
-	private Long assignee;
+	private long assignee;
 	
 	@NotBlank
 	@Column(name="type", nullable = false, columnDefinition = "VARCHAR(20)", length = 20)
@@ -69,31 +69,31 @@ public class Backlog implements Serializable {
 	private String methodolgy;
 	
 	@Column(name="methodolgy_id")
-	private Long methodolgyId;
+	private long methodolgyId;
 	
 	@Pattern(regexp = "\\d+", message="Story points should be Number")
 	@Column(name="story_points")
 	private int storyPoints;
 	
 	@Column(name="created_by")
-	private Long createdBy;
+	private long createdBy;
 	
 	@Column(name="updated_by")
-	private Long updatedBy;
+	private long updatedBy;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public Long getProjectId() {
+	public long getProjectId() {
 		return projectId;
 	}
 
-	public void setProjectId(Long projectId) {
+	public void setProjectId(long projectId) {
 		this.projectId = projectId;
 	}
 
@@ -113,19 +113,19 @@ public class Backlog implements Serializable {
 		this.description = description;
 	}
 
-	public Long getReporter() {
+	public long getReporter() {
 		return reporter;
 	}
 
-	public void setReporter(Long reporter) {
+	public void setReporter(long reporter) {
 		this.reporter = reporter;
 	}
 
-	public Long getAssignee() {
+	public long getAssignee() {
 		return assignee;
 	}
 
-	public void setAssignee(Long assignee) {
+	public void setAssignee(long assignee) {
 		this.assignee = assignee;
 	}
 
@@ -153,11 +153,11 @@ public class Backlog implements Serializable {
 		this.methodolgy = methodolgy;
 	}
 
-	public Long getMethodolgyId() {
+	public long getMethodolgyId() {
 		return methodolgyId;
 	}
 
-	public void setMethodolgyId(Long methodolgyId) {
+	public void setMethodolgyId(long methodolgyId) {
 		this.methodolgyId = methodolgyId;
 	}
 
@@ -169,26 +169,20 @@ public class Backlog implements Serializable {
 		this.storyPoints = storyPoints;
 	}
 
-	public Long getCreatedBy() {
+	public long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Long createdBy) {
+	public void setCreatedBy(long createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public Long getUpdatedBy() {
+	public long getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(Long updatedBy) {
+	public void setUpdatedBy(long updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
-	
 
 }

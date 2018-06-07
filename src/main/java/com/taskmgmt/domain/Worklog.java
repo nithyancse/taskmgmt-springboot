@@ -31,7 +31,7 @@ public class Worklog implements Serializable {
 	@GeneratedValue(strategy= GenerationType.AUTO, generator="nativeWay")
 	@GenericGenerator(name = "nativeWay", strategy = "native")
 	@Column(name="id")
-	private Long id;
+	private long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Backlog.class)
 	@JoinColumn(name = "backlog_id", nullable = false)
@@ -45,16 +45,16 @@ public class Worklog implements Serializable {
 	private int workedTime;
 	
 	@Column(name="created_by")
-	private Long createdBy;
+	private long createdBy;
 	
 	@Column(name="updated_by")
-	private Long updatedBy;
+	private long updatedBy;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -74,19 +74,19 @@ public class Worklog implements Serializable {
 		this.workedTime = workedTime;
 	}
 
-	public Long getCreatedBy() {
+	public long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Long createdBy) {
+	public void setCreatedBy(long createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public Long getUpdatedBy() {
+	public long getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(Long updatedBy) {
+	public void setUpdatedBy(long updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 	

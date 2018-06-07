@@ -31,13 +31,13 @@ public class Project implements Serializable {
 	@GeneratedValue(strategy= GenerationType.AUTO, generator="nativeWay")
 	@GenericGenerator(name = "nativeWay", strategy = "native")
 	@Column(name="id")
-	private Long id;
+	private long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Company.class)
 	@JoinColumn(name = "company_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
-	private Long companyId;
+	private long companyId;
 	
 	@NotBlank
 	@Size(max=100, message="Project title should be less than 100 chars")
@@ -52,24 +52,24 @@ public class Project implements Serializable {
 	private String methodolgy;
 	
 	@Column(name="created_by")
-	private Long createdBy;
+	private long createdBy;
 	
 	@Column(name="updated_by")
-	private Long updatedBy;
+	private long updatedBy;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public Long getCompanyId() {
+	public long getCompanyId() {
 		return companyId;
 	}
 
-	public void setCompanyId(Long companyId) {
+	public void setCompanyId(long companyId) {
 		this.companyId = companyId;
 	}
 
@@ -97,25 +97,20 @@ public class Project implements Serializable {
 		this.methodolgy = methodolgy;
 	}
 
-	public Long getCreatedBy() {
+	public long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Long createdBy) {
+	public void setCreatedBy(long createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public Long getUpdatedBy() {
+	public long getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(Long updatedBy) {
+	public void setUpdatedBy(long updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	
 }

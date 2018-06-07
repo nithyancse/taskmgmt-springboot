@@ -25,36 +25,35 @@ public class User extends AuditModel implements Serializable {
 	@GeneratedValue(strategy= GenerationType.AUTO, generator="nativeWay")
 	@GenericGenerator(name = "nativeWay", strategy = "native")
 	@Column(name="id")
-	private Long id;
+	private long id;
 	
 	@Column(name="name", columnDefinition = "VARCHAR(45)", length = 45)
 	private String name;
 	
-	
-	@Size(min=6, max=24, message="Password length should be min {min} and max {max}")
-	@Column(name="password", nullable = false, columnDefinition = "VARCHAR(25)", length = 24)
-	private String password;
-	
 	@NotBlank(message="Please enter Email Id")
-	@Email(message="Please enter valid Email Id")
+	//@Email(message="Please enter valid Email Id")
 	@Column(name="email_id", nullable = false, columnDefinition = "VARCHAR(45)", length = 45)
 	private String emailId;
+	
+	//@Size(min=6, max=24, message="Password length should be min {min} and max {max}")
+	@Column(name="password", nullable = false, columnDefinition = "VARCHAR(25)", length = 24)
+	private String password;
 	
 	@Size(min=6, max=24, message="Confirm Password length should be min {min} and max {max}")
 	@Transient
 	private String confirmPassword;
 
-	@Column(name="status", columnDefinition = "VARCHAR(2) DEFAULT 'A'", length = 2)
+	@Column(name="status", columnDefinition = "VARCHAR(2)", length = 2)
 	private String status;
 	
 	@Column(name="company_id")
-	private Long companyId;
+	private long companyId;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -98,11 +97,11 @@ public class User extends AuditModel implements Serializable {
 		this.status = status;
 	}
 
-	public Long getCompanyId() {
+	public long getCompanyId() {
 		return companyId;
 	}
 
-	public void setCompanyId(Long companyId) {
+	public void setCompanyId(long companyId) {
 		this.companyId = companyId;
 	}
 

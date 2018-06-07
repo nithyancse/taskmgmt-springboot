@@ -39,15 +39,17 @@ public class LoginController {
 
 		String errorMsg = null;
 		Long userId = 0L;
+		Company company = null;
+		User user = null;
 
 		if (!Utils.isEmpty(emailId) && !Utils.isEmpty(password)) {
 			userId = iUserService.validateUser(emailId, password);
 			if (userId == 0) {
-				errorMsg = "Incorrect Username and Password !!!";
+				errorMsg = "Incorrect Username and Password :( ";
 				logger.info("Authendication failed --> emailId:" + emailId + ", password: " + password);
 			}
 		} else {
-			errorMsg = "Username and Password should be Empty";
+			errorMsg = "Username and Password should not be Empty";
 		}
 
 		if (!Utils.isEmpty(errorMsg)) {
@@ -57,8 +59,10 @@ public class LoginController {
 			}
 		}
 
-		User user = iUserService.fetchUserDetail(userId);
-		Company company = iCompanyService.getCompanyDetails(user.getCompanyId());
+		user = iUserService.fetchUserDetail(userId);
+		if(user.getCompanyId() != 0) {
+			company = iCompanyService.getCompanyDetails(user.getCompanyId());
+		}
 		userCompanyWrap.setUser(user);
 		userCompanyWrap.setCompany(company);
 		return new ResponseEntity<UserCompanyWrap>(userCompanyWrap, HttpStatus.OK);

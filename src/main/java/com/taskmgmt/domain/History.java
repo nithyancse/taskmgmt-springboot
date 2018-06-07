@@ -25,7 +25,7 @@ public class History implements Serializable {
 	@GeneratedValue(strategy= GenerationType.AUTO, generator="nativeWay")
 	@GenericGenerator(name = "nativeWay", strategy = "native")
 	@Column(name="id")
-	private Long id;
+	private long id;
 	
 	@NotBlank
 	@Size(max=50, message="Table name length should be < 50 chars")
@@ -35,7 +35,7 @@ public class History implements Serializable {
 	@NotBlank
 	@Pattern(regexp = "\\d+", message="Table id should be Number")
 	@Column(name="table_id")
-	private Long tableId;
+	private long tableId;
 	
 	@NotBlank
 	@Size(max=50, message="Column name length should be < 50 chars")
@@ -48,16 +48,16 @@ public class History implements Serializable {
 	private String value;
 	
 	@Column(name="created_by")
-	private Long createdBy;
+	private long createdBy;
 	
 	@Column(name="updated_by")
-	private Long updatedBy;
+	private long updatedBy;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -69,11 +69,11 @@ public class History implements Serializable {
 		this.table_name = table_name;
 	}
 
-	public Long getTableId() {
+	public long getTableId() {
 		return tableId;
 	}
 
-	public void setTableId(Long tableId) {
+	public void setTableId(long tableId) {
 		this.tableId = tableId;
 	}
 
@@ -93,25 +93,20 @@ public class History implements Serializable {
 		this.value = value;
 	}
 
-	public Long getCreatedBy() {
+	public long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Long createdBy) {
+	public void setCreatedBy(long createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public Long getUpdatedBy() {
+	public long getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(Long updatedBy) {
+	public void setUpdatedBy(long updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	
 }

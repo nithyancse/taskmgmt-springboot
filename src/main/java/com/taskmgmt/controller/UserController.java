@@ -35,12 +35,13 @@ public class UserController {
 
 	@PostMapping("addUser")
 	public ResponseEntity<?> addUser(@Valid @RequestBody User user, UriComponentsBuilder builder, Errors errors) {
+		user.setStatus(IConstant.ACTIVE);
 		boolean flag = iUserService.addUser(user);
 		if (flag == false) {
-			CustResponse restAlready = new CustResponse("You are Already Registered !!!");
+			CustResponse restAlready = new CustResponse("You are Already Registered :) ");
 			return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(restAlready);
 		}
-		CustResponse success = new CustResponse("Successfully you are Resgistered with us !!!");
+		CustResponse success = new CustResponse("Successfully you are Resgistered with us :) ");
 		return ResponseEntity.created(null).body(success);
 	}
 
@@ -49,9 +50,9 @@ public class UserController {
 		String errorMsg = null;
 		if (!Utils.isEmpty(name)) {
 			if(name.length() > 45)
-				errorMsg = "Name Should be empty < 45 chars";
+				errorMsg = "Name should be less than 45 chars";
 		} else {
-			errorMsg = "Name Should not be empty";
+			errorMsg = "Name should not be empty";
 		}
 		
 		if (!Utils.isEmpty(errorMsg)) {

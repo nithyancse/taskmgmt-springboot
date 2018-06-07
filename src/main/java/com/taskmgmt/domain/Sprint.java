@@ -24,10 +24,10 @@ public class Sprint implements Serializable {
 	@GeneratedValue(strategy= GenerationType.AUTO, generator="nativeWay")
 	@GenericGenerator(name = "nativeWay", strategy = "native")
 	@Column(name="id")
-	private Long id;
+	private long id;
 	
 	@Column(name="project_id")
-	private Long projectId;
+	private long projectId;
 	
 	@NotBlank
 	@Size(max=45, message="Sprint title should be less than 45 chars")
@@ -45,24 +45,24 @@ public class Sprint implements Serializable {
 	private String endDate;
 	
 	@Column(name="created_by")
-	private Long createdBy;
+	private long createdBy;
 	
 	@Column(name="updated_by")
-	private Long updatedBy;
+	private long updatedBy;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public Long getProjectId() {
+	public long getProjectId() {
 		return projectId;
 	}
 
-	public void setProjectId(Long projectId) {
+	public void setProjectId(long projectId) {
 		this.projectId = projectId;
 	}
 
@@ -90,26 +90,20 @@ public class Sprint implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public Long getCreatedBy() {
+	public long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Long createdBy) {
+	public void setCreatedBy(long createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public Long getUpdatedBy() {
+	public long getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(Long updatedBy) {
+	public void setUpdatedBy(long updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	
 	
 }

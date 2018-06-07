@@ -26,7 +26,7 @@ public class Company extends AuditModel implements Serializable {
 	@GeneratedValue(strategy= GenerationType.AUTO, generator="nativeWay")
 	@GenericGenerator(name = "nativeWay", strategy = "native")
 	@Column(name="id")
-	private Long id;
+	private long id;
 	
 	@NotBlank
 	@Size(max=100, message="Company name should be less than 100 chars")
@@ -38,17 +38,17 @@ public class Company extends AuditModel implements Serializable {
 	
 	@Column(name="created_by")
 	@JsonIgnore
-	private Long createdBy;
+	private long createdBy;
 	
 	@Column(name="updated_by")
 	@JsonIgnore
-	private Long updatedBy;
+	private long updatedBy;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -68,25 +68,20 @@ public class Company extends AuditModel implements Serializable {
 		this.logo = logo;
 	}
 
-	public Long getCreatedBy() {
+	public long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Long createdBy) {
+	public void setCreatedBy(long createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public Long getUpdatedBy() {
+	public long getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(Long updatedBy) {
+	public void setUpdatedBy(long updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
 	
 }

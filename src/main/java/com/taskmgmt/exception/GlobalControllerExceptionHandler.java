@@ -21,12 +21,12 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(value = { NoHandlerFoundException.class })
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public GlobalError noHandlerFoundException(Exception ex) {
-        return new GlobalError(HttpStatus.NOT_FOUND,"Request Not Found, so please try again after some time", ex.getMessage());
+        return new GlobalError(HttpStatus.NOT_FOUND,"Request Not Found, So please try again after some time", ex.getMessage());
     }
 
     @ExceptionHandler(value = { Exception.class })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public GlobalError unknownException(Exception ex) {
-        return new GlobalError(HttpStatus.INTERNAL_SERVER_ERROR,"Internal server error, so please try again after some time", ex.getMessage());
+        return new GlobalError(HttpStatus.INTERNAL_SERVER_ERROR,"Server under maintenance, So please try again after some time", ex.getMessage());
     }
 }
