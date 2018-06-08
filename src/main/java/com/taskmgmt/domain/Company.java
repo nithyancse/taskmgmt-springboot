@@ -13,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -33,7 +34,7 @@ public class Company extends AuditModel implements Serializable {
 	@Column(name="name", nullable = false, columnDefinition = "VARCHAR(100)", length = 100)
 	private String name;
 	
-	@Column(name="logo", columnDefinition = "BLOB")
+	@Column(name="logo")
 	private File logo;
 	
 	@Column(name="created_by")
