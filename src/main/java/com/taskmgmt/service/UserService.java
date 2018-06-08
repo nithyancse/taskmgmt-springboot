@@ -61,6 +61,13 @@ public class UserService implements IUserService {
 		user.setName(name);
 		userRepository.save(user);
 	}
+	
+	@Override
+	public void updateCompanyId(long id, long companyId) {
+		User user = userRepository.findById(id).get();
+		user.setCompanyId(companyId);
+		userRepository.save(user);
+	}
 
 	@Override
 	public Long validateUser(String emailId, String password) {

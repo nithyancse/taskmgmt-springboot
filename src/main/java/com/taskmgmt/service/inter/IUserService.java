@@ -18,6 +18,8 @@ public interface IUserService {
 
 	public void addName(long id, String name);
 	
+	public void updateCompanyId(long id, long companyId);
+	
 	public Long validateUser(String emailId, String password);
 
 }

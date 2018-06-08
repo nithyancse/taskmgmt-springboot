@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -29,20 +30,19 @@ public class Company extends AuditModel implements Serializable {
 	@Column(name="id")
 	private long id;
 	
-	@NotBlank
-	@Size(max=100, message="Company name should be less than 100 chars")
 	@Column(name="name", nullable = false, columnDefinition = "VARCHAR(100)", length = 100)
 	private String name;
 	
-	@Column(name="logo")
-	private File logo;
+	@Transient
+	private MultipartFile logo;
+	
+	@Column(name="logo_name", columnDefinition = "VARCHAR(200)")
+	private String logoName;
 	
 	@Column(name="created_by")
-	@JsonIgnore
 	private long createdBy;
 	
 	@Column(name="updated_by")
-	@JsonIgnore
 	private long updatedBy;
 
 	public long getId() {
@@ -61,12 +61,20 @@ public class Company extends AuditModel implements Serializable {
 		this.name = name;
 	}
 
-	public File getLogo() {
+	public MultipartFile getLogo() {
 		return logo;
 	}
 
-	public void setLogo(File logo) {
+	public void setLogo(MultipartFile logo) {
 		this.logo = logo;
+	}
+
+	public String getLogoName() {
+		return logoName;
+	}
+
+	public void setLogoName(String logoName) {
+		this.logoName = logoName;
 	}
 
 	public long getCreatedBy() {
