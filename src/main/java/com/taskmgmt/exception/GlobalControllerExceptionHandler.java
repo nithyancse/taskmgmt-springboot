@@ -27,6 +27,6 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(value = { Exception.class })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public GlobalError unknownException(Exception ex) {
-        return new GlobalError(HttpStatus.INTERNAL_SERVER_ERROR,"Server under maintenance, So please try again after some time", ex.getMessage());
+        return new GlobalError(HttpStatus.INTERNAL_SERVER_ERROR,"We can't process this request due to Server under maintenance", ex.getMessage());
     }
 }
